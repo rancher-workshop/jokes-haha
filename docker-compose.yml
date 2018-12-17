@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  server-joke:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/app
+    tty: true
+    stdin_open: true
