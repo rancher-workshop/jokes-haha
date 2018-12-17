@@ -14,6 +14,13 @@ def hello_route():
     })
 
 
+@app.route('/tutorial')
+def hello_route2():
+    return jsonify({
+        'hello': 'heeeeeeey'
+    })
+
+
 @app.route('/joke')
 def get_random_joke():
     data = requests.get(BASE_URL + '/jokes/random').json()
