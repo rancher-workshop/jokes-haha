@@ -1,5 +1,6 @@
 stages:
   - test
+  - build
 
 ##############################################################################
 #                                 Test stage                                 #
@@ -23,3 +24,30 @@ unit_test:
 ##############################################################################
 #                              Build stage                                   #
 ##############################################################################
+
+build_joke:
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  beforre_script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  script:
+    - docker build -t joke_haha:$ENV_TAG
+  only:
+    - /devel/
+  environment: homolog
+
+push_joke:
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  beforre_script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  script:
+    - docker build -t joke_haha:$ENV_TAG
+    - docker push $DOCKER_USER/joke_haha:$ENV_TAG
+  only:
+    - /master/
+  environment: production
